@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: go-gateway
+
+build:
+  artifacts:
+    - image: go-api-gateway
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+
+deploy:
+  kubectl:
+    manifests:
+      - deployment.yaml
+
+portForward:
+  - resourceType: service
+    resourceName: go-gateway-service
+    port: 80
+    localPort: 8080

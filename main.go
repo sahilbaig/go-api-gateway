@@ -6,19 +6,18 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/sahilbaig/go-api-gateway/discovery"
 	customMiddleware "github.com/sahilbaig/go-api-gateway/middleware"
-	"k8s.io/client-go/rest"
 )
 
 func main(){
 	fmt.Println("Holla Holla get some Dolla")
 	r:=chi.NewRouter()
-	_, err := rest.InClusterConfig()
-	if err != nil {
-		fmt.Println("K8s config test failed (expected outside cluster):", err)
-	} else {
-		fmt.Println("K8s package is working!")
-	}
+	
+
+	data :=discovery.ServiceDiscovery();
+	fmt.Println(data)
+	
 	r.Use(middleware.DefaultLogger)
 	r.Use(customMiddleware.RateLimiter(1,2))
 	r.Use(func(next http.Handler) http.Handler {

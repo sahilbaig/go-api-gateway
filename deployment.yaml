@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: go-gateway
-          image: sahilbaig/go-api-gateway:latest
+          image: go-api-gateway:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
 ---
